@@ -159,7 +159,7 @@ public class Simulator extends JFrame implements MapRendererTopicListener {
         btnRefresh.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Application.mapPanel.refresh();
+                Application.mapPanel.refresh(true);
             }
         });
         panelBottom.add(btnRefresh);
