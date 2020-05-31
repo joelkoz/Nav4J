@@ -4,16 +4,12 @@ package org.nav4j.display;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ComponentEvent;
-import java.text.DecimalFormat;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
-import org.map4j.coordinates.WCoordinate;
-import org.map4j.render.MapRenderer;
-import org.map4j.render.MapRenderer.MapRendererTopicListener;
 import org.map4j.swing.Map4JPanel;
 
 
@@ -22,7 +18,7 @@ import org.map4j.swing.Map4JPanel;
  * map, and an optional "otherPanel" that can be displayed to the right
  * of the map in split screen mode.
  */
-public class SplitDisplayPanel extends JPanel implements MapRendererTopicListener {
+public class SplitDisplayPanel extends JPanel {
     
     /** Serial Version UID */
     private static final long serialVersionUID = 3050203054402323973L;
@@ -35,8 +31,6 @@ public class SplitDisplayPanel extends JPanel implements MapRendererTopicListene
     
     private JSplitPane splitPane;
     
-    private DataPanel dataPosition;
-
     public SplitDisplayPanel() {
         this(false);
     }
@@ -53,14 +47,6 @@ public class SplitDisplayPanel extends JPanel implements MapRendererTopicListene
         mapOverlay = new JPanel(new BorderLayout());
         mapOverlay.setOpaque(false);
         mapOverlay.setBorder(new EmptyBorder(5,5,5,5));
-        
-        JPanel topLine = new JPanel(new BorderLayout());
-        topLine.setOpaque(false);
-        
-        dataPosition = new DataPanel("Position");
-        
-        topLine.add(dataPosition, BorderLayout.EAST);
-        mapOverlay.add(topLine, BorderLayout.NORTH);
         
         map = new Map4JPanel(20);
         
@@ -87,8 +73,6 @@ public class SplitDisplayPanel extends JPanel implements MapRendererTopicListene
         });        
 
         setSplitVisible(splitVisible);
-        
-        MapRenderer.broker.subscribe(MapRenderer.TOPIC_CHANGED, this);
     }
     
     
@@ -101,6 +85,16 @@ public class SplitDisplayPanel extends JPanel implements MapRendererTopicListene
         return otherPanel;
     }
 
+    
+    /**
+     * Returns an "overlay panel" that can be used to draw items on top of the 
+     * moving map. The panel is a transparent panel that is drawn on top
+     * of the map panel in the split pane, and is sized to always match that
+     * of getMapPanel()
+     */
+    public JPanel getOverlayPanel() {
+        return mapOverlay;
+    }
     
     /**
      * Returns the Map4JPanel used to render the map display.
@@ -150,17 +144,4 @@ public class SplitDisplayPanel extends JPanel implements MapRendererTopicListene
         super.setSize(width, height);
     }
 
-    private WCoordinate wCurPos = new WCoordinate();
-    
-    @Override
-    public void onPublish(String topic, MapRenderer mapRenderer) {
-
-        WCoordinate wPos = mapRenderer.getDisplayLocation();
-        if (!wCurPos.equals(wPos)) {
-            DecimalFormat df = new DecimalFormat("###.#####");
-            wCurPos = new WCoordinate(wPos);
-            dataPosition.setData(df.format(wCurPos.getLat()) + ", " + df.format(wCurPos.getLon()));
-        }
-        
-    }
 }
