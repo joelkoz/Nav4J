@@ -318,7 +318,7 @@ public class Simulator extends JFrame implements MapRendererTopicListener {
         
         BufferedImage iconSource = ImageUtils.loadResourceImage(Simulator.class, "/images/underwater-icons.png");
         
-        boca.add(new MapMarkerImage(iconSource, 78, 13, "Dive #1", 26.3356, -80.058));
+        boca.add(new MapMarkerImage(iconSource, 78, 78, 13, "Dive #1", 26.3356, -80.058));
 
         Application.mapPanel.setLayerRoot(markerSet);
     }
