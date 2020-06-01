@@ -1,6 +1,7 @@
 package org.nav4j.display;
 
 import java.awt.BorderLayout;
+import java.util.Collection;
 
 import javax.swing.JList;
 import javax.swing.JViewport;
@@ -57,6 +58,17 @@ public class PopupSelectionWindow<OptionType> extends PopupPanel implements Butt
     
 
     /**
+     * Adds all the options in the specified collection
+     * to the local menu. This should be called prior to
+     * calling open()
+     */
+    public void addMenuOptions(Collection<String> options) {
+        localMenu.addAll(options);
+    }
+    
+    
+    
+    /**
      * Adds a an option to the selection list.  Should be called
      * prior to calling open().
      * @param optionName
@@ -65,19 +77,35 @@ public class PopupSelectionWindow<OptionType> extends PopupPanel implements Butt
         selectionList.addElement(optionName);
     }
     
+
+    /**
+     * Adds all the options in the specified collection to 
+     * the list of selection options.
+     */
+    public void addSelectionOptions(Collection<OptionType> options) {
+        selectionList.addAll(options);
+    }
+    
+    
+    private boolean componentsAdded = false;
+    private void lazyAddFinalComponents() {
+        if (!componentsAdded) {
+            if (localMenu.getListSize() > 0) {
+                // Local menu options have been specified. Activate
+                // the local menu...
+                this.add(makeScrollable(localMenu), BorderLayout.PAGE_END);
+                localMenu.clearSelection();
+            }
+            
+            this.add(makeScrollable(selectionList), BorderLayout.CENTER);
+            componentsAdded = true;
+        }
+    }
     
     
     @Override
     public void initResponse() {
-        if (localMenu.getListSize() > 0) {
-            // Local menu options have been specified. Activate
-            // the local menu...
-            this.add(makeScrollable(localMenu), BorderLayout.PAGE_END);
-            localMenu.clearSelection();
-        }
-        
-        this.add(makeScrollable(selectionList), BorderLayout.CENTER);
-        
+        lazyAddFinalComponents();
         focusList = selectionList;
         Application.displayWindow.setPopupWindow(this);
     }
@@ -138,22 +166,60 @@ public class PopupSelectionWindow<OptionType> extends PopupPanel implements Butt
     }
 
     
+    
+    private PopupSelectionResponder<OptionType> selectionResponder;
+    
+    /**
+     * Sets the object that should respond to list selections. If
+     * set to null, no response will occur.
+     */
+    public void setSelectionResponder(PopupSelectionResponder<OptionType> selectionResponder) {
+        this.selectionResponder = selectionResponder;
+    }
+    
+    
+    
     protected void onListSelection(OptionType selection) {
-        System.out.println("List selected " + selection.toString());
+        if (this.selectionResponder != null) {
+           if (this.selectionResponder.onListSelection(selection)) {
+               this.close();
+           }
+        }
+        else {
+           System.out.println("List selected " + selection.toString());
+        }
     }
 
 
+    
+    private PopupMenuResponder menuResponder;
+    
+    /**
+     * Sets the object that should respond to menu selections. If
+     * set to null, no response will occur.
+     */
+    public void setMenuResponder(PopupMenuResponder menuResponder) {
+        this.menuResponder = menuResponder;
+    }
+    
+    
     /**
      * Responds to a local menu selection.
      * @param selection The item that was selected when
      *   the center button was pushed.
      */
     protected void onMenuSelection(String selection) {
-        System.out.println("Menu selected " + selection);
+        if (menuResponder != null) {
+            menuResponder.onMenuSelection(selection);
+        }
+        else {
+           System.out.println("Selected " + selection);
+        }
         this.close();
     }
 
 
+    
     @Override
     public void buttonCenterLong() {
         this.close();
