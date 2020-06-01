@@ -8,6 +8,7 @@ import javax.swing.JViewport;
 import org.nav4j.Application;
 import org.nav4j.display.PopupMenuList;
 import org.nav4j.display.PopupPanel;
+import org.nav4j.menu.MenuCommand;
 
 /**
  * A MenuNavigationResponse holds one or more menu options, presents

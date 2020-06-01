@@ -1,4 +1,4 @@
-package org.nav4j.control;
+package org.nav4j.menu;
 
 import javax.swing.Icon;
 

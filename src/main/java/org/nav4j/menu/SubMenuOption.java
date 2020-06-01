@@ -1,6 +1,7 @@
-package org.nav4j.control;
+package org.nav4j.menu;
 
 import org.nav4j.Application;
+import org.nav4j.control.MenuNavigationResponse;
 
 
 /**

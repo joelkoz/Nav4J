@@ -3,7 +3,7 @@ package org.nav4j.display;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 
-import org.nav4j.control.MenuCommand;
+import org.nav4j.menu.MenuCommand;
 
 /**
  * A specialized JList component for displaying menu options on the popup window designated

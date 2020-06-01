@@ -1,5 +1,4 @@
-package org.nav4j.control;
-
+package org.nav4j.menu;
 
 /**
  * A placeholder option is a menu command that is used during development. It

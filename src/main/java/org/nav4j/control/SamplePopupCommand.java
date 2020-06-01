@@ -1,6 +1,7 @@
 package org.nav4j.control;
 
 import org.nav4j.display.PopupSelectionWindow;
+import org.nav4j.menu.AbstractMenuOption;
 
 public class SamplePopupCommand extends AbstractMenuOption {
 

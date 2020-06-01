@@ -1,5 +1,4 @@
-package org.nav4j.control;
-
+package org.nav4j.menu;
 
 /**
  * An abstract base class for most executable menu commands.

@@ -32,11 +32,11 @@ import org.map4j.render.MapRenderer;
 import org.map4j.render.MapRenderer.MapRendererTopicListener;
 import org.map4j.utils.ImageUtils;
 import org.nav4j.Application;
-import org.nav4j.control.PlaceholderOption;
 import org.nav4j.control.SamplePopupCommand;
-import org.nav4j.control.SubMenuOption;
 import org.nav4j.display.DisplayWindow;
 import org.nav4j.display.SplitDisplayPanel;
+import org.nav4j.menu.PlaceholderOption;
+import org.nav4j.menu.SubMenuOption;
 
 
 /**
