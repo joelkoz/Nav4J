@@ -36,11 +36,14 @@ public class DisplayWindow extends JFrame {
 
     
     public DisplayWindow() {
+        this(new Dimension(800,480));
+    }
+    
+    public DisplayWindow(Dimension windowSize) {
         super("Main Window");
 
-        Dimension fixedSize = new Dimension(800,600);
-        setMinimumSize(fixedSize);
-        setMaximumSize(fixedSize);
+        setMinimumSize(windowSize);
+        setMaximumSize(windowSize);
         setUndecorated(true);
         setLocationRelativeTo(null);
         
@@ -49,7 +52,7 @@ public class DisplayWindow extends JFrame {
         splitPanel = new SplitDisplayPanel();
         
         menuPanel = new PopupPanel(794, 60, false);
-        menuPanel.setLocation(3, 540);
+        menuPanel.setLocation(3, 420);
         menuPanel.setVisible(false);
         
         displayLayers.add(splitPanel, JLayeredPane.DEFAULT_LAYER);

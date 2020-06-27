@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.nav4j</groupId>
   <artifactId>nav4j</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>Nav4J</name>
   <description>A navigation application framework using Map4J</description>
   <properties>
@@ -13,7 +13,7 @@
   	<dependency>
   		<groupId>org.map4j</groupId>
   		<artifactId>map4j</artifactId>
-  		<version>0.5</version>
+  		<version>0.6</version>
   	</dependency>
   </dependencies>
 </project>
